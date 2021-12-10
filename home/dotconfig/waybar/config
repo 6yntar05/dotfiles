@@ -1,0 +1,187 @@
+{
+	"layer": "top","position": "top",
+
+	"modules-left": ["tray","custom/arrow-generic-light-r","custom/playerctl","sway/hide","sway/mode","sway/workspaces","custom/arrow-generic-transparent-r","custom/subarrow-generic-transparent-r"],
+
+	"modules-center": ["sway/window"],
+
+	"modules-right": ["custom/subarrow-generic-transparent","custom/arrow-generic-transparent","pulseaudio","network","backlight","temperature","battery","keyboard-state","sway/language","clock#date","custom/arrow-generic-light","clock#time"],
+	//"cpu","custom/clipman",
+
+
+	// -------------------------------------------------------------------------
+	// Modules
+	// -------------------------------------------------------------------------
+	
+	"battery": {
+		"interval": 10,
+		"states": {
+			"warning": 15,
+			"critical": 5
+		},
+		"format": " {capacity}%",
+		"format-plugged": " {capacity}%",
+		"format-discharging": "{icon}  {capacity}%",
+		"format-icons": ["","","","",""],
+		"tooltip-format": "{}\n(cat /sys/class/power_supply/BAT1/current_now)",
+		"tooltip": true
+	},
+
+	"clock#time": {
+		"interval": 1,
+		"format": "{:%H:%M:%S} ",
+		"tooltip": false
+	},
+
+	"clock#date": {
+		"interval": 30,
+		"format": "{:%e %b %Y}",
+		"tooltip-format": "<tt>{calendar}</tt>",
+		"tooltip": true
+	},
+
+	"cpu": {
+		"interval": 5,
+		"tooltip": false,
+		"format": " {usage}%",
+		"states": {
+		  "warning": 70,
+		  "critical": 90
+		}
+	},
+
+    "backlight": {
+        "format": "{icon} {percent}%",
+        "format-icons": [""],
+        "on-scroll-up": "exec brightnessctl set +1%",
+        "on-scroll-down": "exec brightnessctl set 1%-"
+    },
+
+	"sway/language": {
+		"format": "{}",
+		"tooltip": false
+	},
+
+	"network": {
+		"interval": 5,
+		"format-wifi": " {signalStrength}%",
+		"format-ethernet": " {ifname}",
+		"format-disconnected": "",
+		"tooltip-format": "{ifname}: {ipaddr}/{cidr}",
+		"tooltip": true,
+		"on-click": "konsole -e nmtui"
+	},
+
+	"sway/mode": {
+		"format": "{}",
+		"tooltip": false
+	},
+
+	"sway/window": {
+		"format": "{}",
+		"max-length": 40,
+		"tooltip": false
+	},
+
+	"sway/workspaces": {
+		"all-outputs": false,
+		"disable-scroll": true,
+		"format": "{icon}",
+		"format-icons": {
+			"urgent": "",
+			"focused": "",
+			"O1Qdefault": ""
+		}
+	},
+	
+	"keyboard-state": {
+        "numlock": true,
+        "capslock": true,
+        "format": "{name} {icon}",
+        "format-icons": {
+            "locked": "",
+            "unlocked": ""
+        }
+    },
+
+	"pulseaudio": {
+		"format": "{icon} {volume}%  {format_source}",
+		"format-muted": "⃠  {format_source}",
+        "format-bluetooth": " {volume}%  {format_source}",
+        "format-bluetooth-muted": "⃠  {format_source}",
+        "format-source": " {volume}%",
+        "format-source-muted": "",
+		"format-icons": {
+			"default": ["", "", ""],
+			"spotify": "",
+			"phone": "",
+			"portable": "",
+		},
+		"on-click": "pavucontrol",
+		"on-scroll-up": "exec pactl set-sink-volume @DEFAULT_SINK@ +1%",
+		"on-scroll-down": "exec pactl set-sink-volume @DEFAULT_SINK@ -1%",
+		"tooltip": true
+	},
+
+	"temperature": {
+		"critical-threshold": 70,
+		"interval": 5,
+		"format": "{icon} {temperatureC}°",
+		"format-icons": [
+			"","","","",""
+		],
+		"tooltip": false
+	},
+
+	"tray": {
+		"icon-size": 18,
+		"spacing": 6
+	},
+
+	"custom/arrow-generic-light": {
+		"format": "",
+		"tooltip": false
+	},
+
+	"custom/arrow-generic-light-r": {
+		"format": "",
+		"tooltip": false
+	},
+	
+	"custom/arrow-generic-transparent": {
+		"format": "",
+		"tooltip": false
+	},
+	
+	"custom/arrow-generic-transparent-r": {
+		"format": "",
+		"tooltip": false
+	},
+
+	"custom/subarrow-generic-transparent": {
+		"format": "",
+		"tooltip": false
+	},
+	
+	"custom/subarrow-generic-transparent-r": {
+		"format": "",
+		"tooltip": false
+	},
+
+    "custom/scratchpad-indicator": {
+        "interval": 3,
+        "return-type": "json",
+        "exec": "swaymsg -t get_tree | jq --unbuffered --compact-output '( select(.name == \"root\") | .nodes[] | select(.name == \"__i3\") | .nodes[] | select(.name == \"__i3_scratch\") | .focus) as $scratch_ids | [..  | (.nodes? + .floating_nodes?) // empty | .[] | select(.id |IN($scratch_ids[]))] as $scratch_nodes | { text: \"\\($scratch_nodes | length)\", tooltip: $scratch_nodes | map(\"\\(.app_id // .window_properties.class) (\\(.id)): \\(.name)\") | join(\"\\n\") }'",
+        "format": "{}",
+        "on-click": "exec swaymsg 'scratchpad show'",
+        "on-click-right": "exec swaymsg 'move scratchpad'"
+    },
+
+    "custom/clipman":{
+    	"format": "",
+    	"interval": "once",
+    	"exec": "konsole -e 'clipman show-history | less'"
+    }
+}
+
+//playerctl -F metadata xesam:title  

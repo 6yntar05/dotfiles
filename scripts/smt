@@ -1,0 +1,5 @@
+#!/bin/sh
+if [[ -n $1 ]]
+then
+echo $1 | tee /sys/devices/system/cpu/smt/control
+fi

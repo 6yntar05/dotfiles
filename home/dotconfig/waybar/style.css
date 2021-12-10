@@ -1,0 +1,155 @@
+@keyframes blink-warning {
+	70% {
+		color: @light;
+	}
+
+	to {
+		color: @light;
+		background-color: @warning;
+	}
+}
+
+@keyframes blink-critical {
+	70% {
+		color: @light;
+	}
+
+	to {
+		color: @light;
+		background-color: @critical;
+	}
+}
+
+
+@define-color light #eceff4;
+@define-color dark #2e3440;
+@define-color warning #ebcb8b;
+@define-color critical #d08770;
+@define-color generic #434c5e;
+@define-color date #434c5e;
+@define-color time #eceff4;
+
+* {
+	border: none;
+	border-radius: 0;
+	min-height: 0;
+	margin: 0;
+	padding: 0;
+}
+
+#waybar {
+	background: #282828;
+	color: @light;
+	font-family: "Hack Nerd Font";
+	font-size: 10pt;
+	opacity: 0.85;
+}
+
+#battery,
+#clock,
+#cpu,
+#language,
+#memory,
+#mode,
+#network,
+#pulseaudio,
+#temperature,
+#backlight{
+	padding-left: 8px;
+	padding-right: 8px;
+	background-color: @generic;
+	background: @generic;
+	color: @light;
+}
+
+#clock.time,
+#tray{
+	background-color: @light;
+	background: @light;
+	color: @dark;
+	opacity: 1;
+}
+
+/* Each module that should blink */
+#mode,
+#memory,
+#temperature,
+#battery {
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+}
+
+#memory.critical,
+#cpu.critical,
+#temperature.critical,
+#battery.critical {
+	color: @critical;
+}
+
+/* Each critical that should blink */
+#mode,
+#memory.critical,
+#temperature.critical,
+#battery.critical.discharging {
+	animation-name: blink-critical;
+	animation-duration: 2s;
+}
+
+/* Each warning */
+#network.disconnected,
+#memory.warning,
+#cpu.warning,
+#temperature.warning,
+#battery.warning {
+	color: @warning;
+}
+
+/* Each warning that should blink */
+#battery.warning.discharging {
+	animation-name: blink-warning;
+	animation-duration: 3s;
+}
+
+
+/* Workspaces stuff */
+#workspaces button {
+	padding-left: 4px;
+	padding-right: 4px;
+	color: @light;
+	background: @generic;
+}
+
+#workspaces button.focused {
+	background: @generic;
+}
+
+#workspaces button.urgent {
+	border-color: #c9545d;
+	color: #c9545d;
+}
+
+#window {
+	margin-right: 40px;
+	margin-left: 40px;
+}
+
+#custom-arrow-generic-transparent,
+#custom-subarrow-generic-transparent,
+#custom-arrow-generic-transparent-r,
+#custom-subarrow-generic-transparent-r{
+	font-size: 16px;
+	color: @generic;
+	background: transparent;
+	font-family: "Terminus";
+	font-size: 14pt;
+}
+
+#custom-arrow-generic-light,
+#custom-arrow-generic-light-r {
+	font-size: 16px;
+	color: @time;
+	background: @generic;
+	font-family: "Terminus";
+	font-size: 14pt;
+}
