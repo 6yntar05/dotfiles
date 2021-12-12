@@ -4,7 +4,7 @@ BINARIES=(bash micro neofetch tmux e2fsck cryptsetup)
 HOOKS=(base udev autodetect modconf block encrypt keyboard keymap lvm2 resume filesystems btrfs fsck consolefont)
 COMPRESSION="zstd"
 
-#Linux parameters for my laptop, if you want to use it, remove "lpj=2096085 tsc=unstable trace_clock=local acpi_backlight=video psi=1"
-GRUB_CMDLINE_LINUX_DEFAULT="loglevel=4 radeon.modeset=1 sysrq_always_enabled=1 binder.devices=binder,hwbinder,vndbinder,anbox-binder,anbox-hwbinder,anbox-vndbinder zram.num_devices=10 pci=noaer raid=noautodetect lpj=2096085 tsc=unstable trace_clock=local acpi_backlight=video psi=1 apparmor=1 security=apparmor"
+#Linux parameters for my laptop
+GRUB_CMDLINE_LINUX_DEFAULT="loglevel=4 radeon.modeset=1 sysrq_always_enabled=1 binder.devices=binder,hwbinder,vndbinder,anbox-binder,anbox-hwbinder,anbox-vndbinder zram.num_devices=10 pci=noaer raid=noautodetect tsc=unstable trace_clock=local acpi_backlight=video psi=1 apparmor=1 security=apparmor"
 
 #QT_QPA_PLATFORM=xcb      - Xwayland
