@@ -1,12 +1,12 @@
 {
 	"layer": "top","position": "top",
 
-	"modules-left": ["tray","custom/arrow-generic-light-r","custom/playerctl","sway/hide","sway/mode","sway/workspaces","custom/arrow-generic-transparent-r","custom/subarrow-generic-transparent-r"],
+	"modules-left": ["custom/scratchpad-indicator","custom/arrow-generic-light-r","sway/mode","tray","custom/subarrow-generic-dark-r","custom/playerctl","sway/workspaces","custom/arrow-transparent-generic-r","custom/subarrow-transparent-generic-r","custom/weather","wlr/taskbar"],
 
-	"modules-center": ["sway/window"],
+	"modules-center": ["custom/subarrow-transparent-generic","custom/subarrow-transparent-light","sway/window","custom/subarrow-transparent-light-r","custom/subarrow-transparent-generic-r"],
 
-	"modules-right": ["custom/subarrow-generic-transparent","custom/arrow-generic-transparent","pulseaudio","network","backlight","temperature","battery","keyboard-state","sway/language","clock#date","custom/arrow-generic-light","clock#time"],
-	//"cpu","custom/clipman",
+	"modules-right": ["custom/subarrow-transparent-generic","custom/arrow-transparent-generic","pulseaudio","custom/subarrow-generic-dark","network","custom/vpn","custom/subarrow-generic-dark","idle_inhibitor","backlight","custom/subarrow-generic-dark","temperature","custom/subarrow-generic-dark","battery","custom/subarrow-generic-dark","sway/language","custom/subarrow-generic-dark","clock#date","custom/arrow-generic-light","clock#time"],
+	//"cpu","custom/clipman","keyboard-state"
 
 
 	// -------------------------------------------------------------------------
@@ -21,7 +21,7 @@
 		},
 		"format": " {capacity}%",
 		"format-plugged": " {capacity}%",
-		"format-discharging": "{icon}  {capacity}%",
+		"format-discharging": "{icon} {capacity}%",
 		"format-icons": ["","","","",""],
 		"tooltip-format": "{}\n(cat /sys/class/power_supply/BAT1/current_now)",
 		"tooltip": true
@@ -29,7 +29,7 @@
 
 	"clock#time": {
 		"interval": 1,
-		"format": "{:%H:%M:%S} ",
+		"format": "{:%H:%M:%S}",
 		"tooltip": false
 	},
 
@@ -64,10 +64,12 @@
 
 	"network": {
 		"interval": 5,
+		"format": " {ifname}",
 		"format-wifi": " {signalStrength}%",
 		"format-ethernet": " {ifname}",
-		"format-disconnected": "",
-		"tooltip-format": "{ifname}: {ipaddr}/{cidr}",
+		"format-disconnected": "",
+		"tooltip-format": "{ifname} : {ipaddr}/{cidr}",
+		"tooltip-format-wifi": "{ifname}: {essid} : {ipaddr}/{cidr}",
 		"tooltip": true,
 		"on-click": "konsole -e nmtui"
 	},
@@ -106,20 +108,23 @@
 
 	"pulseaudio": {
 		"format": "{icon} {volume}%  {format_source}",
-		"format-muted": "⃠  {format_source}",
+		"format-muted": "  {format_source}",
         "format-bluetooth": " {volume}%  {format_source}",
         "format-bluetooth-muted": "⃠  {format_source}",
         "format-source": " {volume}%",
         "format-source-muted": "",
 		"format-icons": {
-			"default": ["", "", ""],
+			"default": [""],
 			"spotify": "",
 			"phone": "",
 			"portable": "",
+			"car": ""
 		},
 		"on-click": "pavucontrol",
+		"on-click-right": "blueman-manager",
 		"on-scroll-up": "exec pactl set-sink-volume @DEFAULT_SINK@ +1%",
 		"on-scroll-down": "exec pactl set-sink-volume @DEFAULT_SINK@ -1%",
+		"tooltip-format": "{desc}",
 		"tooltip": true
 	},
 
@@ -134,8 +139,25 @@
 	},
 
 	"tray": {
-		"icon-size": 18,
+		"icon-size": 14,
 		"spacing": 6
+	},
+
+	"wlr/taskbar": {
+	    "format": "{icon}",
+	    "icon-size": 14,
+	    "icon-theme": "Tela-circle-dark",
+	    "tooltip-format": "{title}",
+	    "on-click": "activate",
+	    "on-click-middle": "close"
+	},
+
+	"idle_inhibitor": {
+		"format": "{icon}",
+		"format-icons": {
+			"activated": " ",
+			"deactivated": " "
+		}
 	},
 
 	"custom/arrow-generic-light": {
@@ -148,40 +170,116 @@
 		"tooltip": false
 	},
 	
-	"custom/arrow-generic-transparent": {
+	"custom/arrow-transparent-generic": {
 		"format": "",
 		"tooltip": false
 	},
 	
-	"custom/arrow-generic-transparent-r": {
+	"custom/arrow-transparent-generic-r": {
 		"format": "",
 		"tooltip": false
 	},
 
-	"custom/subarrow-generic-transparent": {
+	"custom/subarrow-transparent-generic": {
 		"format": "",
 		"tooltip": false
 	},
 	
-	"custom/subarrow-generic-transparent-r": {
+	"custom/subarrow-transparent-generic-r": {
 		"format": "",
 		"tooltip": false
 	},
 
+	"custom/subarrow-generic-light": {
+		"format": "",
+		"tooltip": false
+	},
+	
+	"custom/subarrow-generic-light-r": {
+		"format": "",
+		"tooltip": false
+	},
+
+	"custom/subarrow-transparent-light": {
+		"format": "",
+		"tooltip": false
+	},
+	
+	"custom/subarrow-transparent-light-r": {
+		"format": "",
+		"tooltip": false
+	},
+
+    "custom/subarrow-generic-dark": {
+   		"format": "",
+   		"tooltip": false
+   	},
+
+    "custom/subarrow-generic-dark-r": {
+		"format": "",
+		"tooltip": false
+	},
+	
     "custom/scratchpad-indicator": {
         "interval": 3,
         "return-type": "json",
         "exec": "swaymsg -t get_tree | jq --unbuffered --compact-output '( select(.name == \"root\") | .nodes[] | select(.name == \"__i3\") | .nodes[] | select(.name == \"__i3_scratch\") | .focus) as $scratch_ids | [..  | (.nodes? + .floating_nodes?) // empty | .[] | select(.id |IN($scratch_ids[]))] as $scratch_nodes | { text: \"\\($scratch_nodes | length)\", tooltip: $scratch_nodes | map(\"\\(.app_id // .window_properties.class) (\\(.id)): \\(.name)\") | join(\"\\n\") }'",
-        "format": "{}",
+        "format": " {} ",
         "on-click": "exec swaymsg 'scratchpad show'",
         "on-click-right": "exec swaymsg 'move scratchpad'"
     },
 
-    "custom/clipman":{
-    	"format": "",
-    	"interval": "once",
-    	"exec": "konsole -e 'clipman show-history | less'"
-    }
+    "custom/vpn": {
+        "format": "VPN ",
+        "exec": "echo '{\"class\": \"connected\"}'",
+        "exec-if": "test -d /proc/sys/net/ipv4/conf/tun0",
+        "return-type": "json",
+        "interval": 5
+    },
+
+    "custom/weather": {
+    	"format": "   {}   ",
+        "exec": "curl 'https://wttr.in/Tomsk?format=1'",
+        "interval": 3600
+    },
+
+   	"mpd": {
+        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ ",
+        "format-disconnected": "Disconnected",
+        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
+        "unknown-tag": "N/A",
+        "interval": 2,
+        "consume-icons": {
+            "on": " "
+        },
+        "random-icons": {
+            "off": "<span color=\"#f53c3c\"></span> ",
+            "on": " "
+        },
+        "repeat-icons": {
+            "on": " "
+        },
+        "single-icons": {
+            "on": "1 "
+        },
+        "state-icons": {
+            "paused": "",
+            "playing": ""
+        },
+        "tooltip-format": "MPD (connected)",
+        "tooltip-format-disconnected": "MPD (disconnected)"
+    },
+
+   "custom/cmus": {
+		"format": "  {}",
+		"max-length": 20,
+		"interval": 10,
+		"exec": "cmus-remote -C \"format_print '%a - %t'\"",
+		"exec-if": "pgrep cmus",
+		"on-click": "cmus-remote -u",
+		"escape": true
+	}
+ 
 }
 
-//playerctl -F metadata xesam:title  
+//playerctl -F metadata xesam:title

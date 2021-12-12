@@ -4,8 +4,7 @@
 	}
 
 	to {
-		color: @light;
-		background-color: @warning;
+		color: @warning
 	}
 }
 
@@ -15,8 +14,7 @@
 	}
 
 	to {
-		color: @light;
-		background-color: @critical;
+		color: @critical;
 	}
 }
 
@@ -38,9 +36,10 @@
 }
 
 #waybar {
-	background: #282828;
+	background: #232323;
 	color: @light;
 	font-family: "Hack Nerd Font";
+	font-family: "Terminus";
 	font-size: 10pt;
 	opacity: 0.85;
 }
@@ -51,9 +50,12 @@
 #language,
 #memory,
 #mode,
+#idle_inhibitor,
 #network,
+#custom-vpn,
 #pulseaudio,
 #temperature,
+#tray,
 #backlight{
 	padding-left: 8px;
 	padding-right: 8px;
@@ -62,12 +64,22 @@
 	color: @light;
 }
 
-#clock.time,
-#tray{
+#wlr-taskbar{
+	padding-left: 8px;
+	padding-right: 8px;
+}
+
+#custom-weather{
+ 	color: @light;
+	font-size: 8pt;
+}
+
+#custom-scratchpad-indicator,
+#clock.time{
 	background-color: @light;
 	background: @light;
 	color: @dark;
-	opacity: 1;
+	opacity: 5;
 }
 
 /* Each module that should blink */
@@ -134,10 +146,10 @@
 	margin-left: 40px;
 }
 
-#custom-arrow-generic-transparent,
-#custom-subarrow-generic-transparent,
-#custom-arrow-generic-transparent-r,
-#custom-subarrow-generic-transparent-r{
+#custom-arrow-transparent-generic,
+#custom-subarrow-transparent-generic,
+#custom-arrow-transparent-generic-r,
+#custom-subarrow-transparent-generic-r{
 	font-size: 16px;
 	color: @generic;
 	background: transparent;
@@ -146,10 +158,30 @@
 }
 
 #custom-arrow-generic-light,
-#custom-arrow-generic-light-r {
+#custom-subarrow-generic-light,
+#custom-arrow-generic-light-r,
+#custom-subarrow-generic-light-r{
 	font-size: 16px;
-	color: @time;
+	color: @light;
 	background: @generic;
+	font-family: "Terminus";
+	font-size: 14pt;
+}
+
+#custom-subarrow-generic-dark,
+#custom-subarrow-generic-dark-r{
+	font-size: 16px;
+	color: @dark;
+	background: @generic;
+	font-family: "Terminus";
+	font-size: 14pt;
+}
+
+#custom-subarrow-transparent-light,
+#custom-subarrow-transparent-light-r{
+	font-size: 16px;
+	color: @light;
+	background: transparent;
 	font-family: "Terminus";
 	font-size: 14pt;
 }
