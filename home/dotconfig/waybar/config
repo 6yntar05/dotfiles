@@ -5,7 +5,7 @@
 
 	"modules-center": ["custom/subarrow-transparent-generic","custom/subarrow-transparent-light","sway/window","custom/subarrow-transparent-light-r","custom/subarrow-transparent-generic-r"],
 
-	"modules-right": ["custom/subarrow-transparent-generic","custom/arrow-transparent-generic","pulseaudio","custom/subarrow-generic-dark","network","custom/vpn","custom/subarrow-generic-dark","idle_inhibitor","backlight","custom/subarrow-generic-dark","temperature","custom/subarrow-generic-dark","battery","custom/subarrow-generic-dark","sway/language","custom/subarrow-generic-dark","clock#date","custom/arrow-generic-light","clock#time"],
+	"modules-right": ["custom/subarrow-transparent-generic","custom/arrow-transparent-generic","pulseaudio","custom/subarrow-generic-dark","network","custom/vpn","custom/subarrow-generic-dark","idle_inhibitor","backlight","custom/subarrow-generic-dark","temperature","custom/subarrow-generic-dark","battery","custom/watts","custom/subarrow-generic-dark","sway/language","custom/subarrow-generic-dark","clock#date","custom/arrow-generic-light","clock#time"],
 	//"cpu","custom/clipman","keyboard-state"
 
 
@@ -278,6 +278,11 @@
 		"exec-if": "pgrep cmus",
 		"on-click": "cmus-remote -u",
 		"escape": true
+	},
+
+	"custom/watts": {
+		"exec": "sh ~/.config/waybar/watts.sh",
+		"interval": 10
 	}
  
 }

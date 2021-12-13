@@ -64,6 +64,13 @@
 	color: @light;
 }
 
+#custom-watts{
+	padding-right: 8px;
+	background-color: @generic;
+	background: @generic;
+	color: @light;	
+}
+
 #wlr-taskbar{
 	padding-left: 8px;
 	padding-right: 8px;

@@ -18,9 +18,12 @@ set {
 	$term2 alacritty
 }
 
-for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 10
-set $menu exec konsole -e /usr/bin/sway-launcher-desktop
+#for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 10
+#set $menu exec konsole -e /usr/bin/sway-launcher-desktop
+
 #set $menu exec $term2 --class=launcher -e /usr/bin/sway-launcher-desktop
+
+set $menu exec bemenu-run -n -b notify-send 
 
 exec swayidle -w \
 	timeout 300 'swaylock -f -c 000000' \
