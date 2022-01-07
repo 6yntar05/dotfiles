@@ -5,7 +5,7 @@
 
 	"modules-center": ["custom/subarrow-transparent-generic","custom/subarrow-transparent-light","sway/window","custom/subarrow-transparent-light-r","custom/subarrow-transparent-generic-r"],
 
-	"modules-right": ["custom/subarrow-transparent-generic","custom/arrow-transparent-generic","pulseaudio","custom/subarrow-generic-dark","network","custom/vpn","custom/subarrow-generic-dark","idle_inhibitor","backlight","custom/subarrow-generic-dark","temperature","custom/subarrow-generic-dark","battery","custom/watts","custom/subarrow-generic-dark","sway/language","custom/subarrow-generic-dark","clock#date","custom/arrow-generic-light","clock#time"],
+	"modules-right": ["custom/subarrow-transparent-generic","custom/arrow-transparent-generic","pulseaudio","custom/subarrow-generic-dark","network","custom/vpn","custom/subarrow-generic-dark","idle_inhibitor","backlight","custom/subarrow-generic-dark","temperature","custom/subarrow-generic-dark","battery","custom/watts","custom/subarrow-generic-dark","keyboard-state","sway/language","custom/subarrow-generic-dark","clock#date","custom/arrow-generic-light","clock#time"],
 	//"cpu","custom/clipman","keyboard-state"
 
 
@@ -52,14 +52,15 @@
 
     "backlight": {
         "format": "{icon} {percent}%",
-        "format-icons": [""],
+        "format-icons": [""],
         "on-scroll-up": "exec brightnessctl set +1%",
         "on-scroll-down": "exec brightnessctl set 1%-"
     },
 
 	"sway/language": {
 		"format": "{}",
-		"tooltip": false
+		"tooltip": false,
+		"on-click": "exec copyq --start-server && copyq toggle"
 	},
 
 	"network": {
@@ -71,7 +72,8 @@
 		"tooltip-format": "{ifname} : {ipaddr}/{cidr}",
 		"tooltip-format-wifi": "{ifname}: {essid} : {ipaddr}/{cidr}",
 		"tooltip": true,
-		"on-click": "konsole -e nmtui"
+		"on-click": "konsole -e nmtui",
+		"on-click-right": "blueman-manager"
 	},
 
 	"sway/mode": {
@@ -95,16 +97,6 @@
 			"O1Qdefault": ""
 		}
 	},
-	
-	"keyboard-state": {
-        "numlock": true,
-        "capslock": true,
-        "format": "{name} {icon}",
-        "format-icons": {
-            "locked": "",
-            "unlocked": ""
-        }
-    },
 
 	"pulseaudio": {
 		"format": "{icon} {volume}%  {format_source}",
@@ -121,7 +113,6 @@
 			"car": ""
 		},
 		"on-click": "pavucontrol",
-		"on-click-right": "blueman-manager",
 		"on-scroll-up": "exec pactl set-sink-volume @DEFAULT_SINK@ +1%",
 		"on-scroll-down": "exec pactl set-sink-volume @DEFAULT_SINK@ -1%",
 		"tooltip-format": "{desc}",
@@ -131,9 +122,10 @@
 	"temperature": {
 		"critical-threshold": 70,
 		"interval": 5,
+		"hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
 		"format": "{icon} {temperatureC}°",
 		"format-icons": [
-			"","","","",""
+			"❄","❄","❄","❄","","","","","","","",""
 		],
 		"tooltip": false
 	},
@@ -229,61 +221,27 @@
         "on-click-right": "exec swaymsg 'move scratchpad'"
     },
 
-    "custom/vpn": {
-        "format": "VPN ",
-        "exec": "echo '{\"class\": \"connected\"}'",
-        "exec-if": "test -d /proc/sys/net/ipv4/conf/tun0",
-        "return-type": "json",
-        "interval": 5
-    },
-
     "custom/weather": {
-    	"format": "   {}   ",
-        "exec": "curl 'https://wttr.in/Tomsk?format=1'",
-        "interval": 3600
+    	"format": "{}",
+        "exec": "sleep 15;curl 'https://wttr.in/?format=1'",
+        "interval": 3600,
+        "tooltip": true
     },
-
-   	"mpd": {
-        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ ",
-        "format-disconnected": "Disconnected",
-        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
-        "unknown-tag": "N/A",
-        "interval": 2,
-        "consume-icons": {
-            "on": " "
-        },
-        "random-icons": {
-            "off": "<span color=\"#f53c3c\"></span> ",
-            "on": " "
-        },
-        "repeat-icons": {
-            "on": " "
-        },
-        "single-icons": {
-            "on": "1 "
-        },
-        "state-icons": {
-            "paused": "",
-            "playing": ""
-        },
-        "tooltip-format": "MPD (connected)",
-        "tooltip-format-disconnected": "MPD (disconnected)"
-    },
-
-   "custom/cmus": {
-		"format": "  {}",
-		"max-length": 20,
-		"interval": 10,
-		"exec": "cmus-remote -C \"format_print '%a - %t'\"",
-		"exec-if": "pgrep cmus",
-		"on-click": "cmus-remote -u",
-		"escape": true
-	},
 
 	"custom/watts": {
 		"exec": "sh ~/.config/waybar/watts.sh",
 		"interval": 10
-	}
+	},
+
+	"keyboard-state": {
+		"numlock": true,
+		"capslock": true,
+		"format": "{name} {icon}",
+		"format-icons": {
+			"locked": "",
+			"unlocked": ""
+		}
+    }
  
 }
 

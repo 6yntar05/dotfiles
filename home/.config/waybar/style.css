@@ -1,5 +1,5 @@
 @keyframes blink-warning {
-	70% {
+	80% {
 		color: @light;
 	}
 
@@ -9,7 +9,7 @@
 }
 
 @keyframes blink-critical {
-	70% {
+	80% {
 		color: @light;
 	}
 
@@ -21,8 +21,8 @@
 
 @define-color light #eceff4;
 @define-color dark #2e3440;
-@define-color warning #ebcb8b;
-@define-color critical #d08770;
+@define-color warning #ff8070;
+@define-color critical #ff3030;
 @define-color generic #434c5e;
 @define-color date #434c5e;
 @define-color time #eceff4;
@@ -38,7 +38,6 @@
 #waybar {
 	background: #232323;
 	color: @light;
-	font-family: "Hack Nerd Font";
 	font-family: "Terminus";
 	font-size: 10pt;
 	opacity: 0.85;
@@ -54,32 +53,32 @@
 #network,
 #custom-vpn,
 #pulseaudio,
-#temperature,
 #tray,
-#backlight{
-	padding-left: 8px;
-	padding-right: 8px;
+#backlight,
+#custom-watts{
+	padding-left: 6px;
+	padding-right: 6px;
 	background-color: @generic;
 	background: @generic;
 	color: @light;
 }
 
-#custom-watts{
-	padding-right: 8px;
+#temperature{
+	padding-left: 6px;
+	padding-right: 2px;
 	background-color: @generic;
 	background: @generic;
-	color: @light;	
+	color: @light;
 }
 
-#wlr-taskbar{
-	padding-left: 8px;
-	padding-right: 8px;
+#custom-weather,
+#taskbar{
+	padding-left: 10px;
+	padding-right: 10px;
+	color: @light;
+	font-size: 8pt;	
 }
 
-#custom-weather{
- 	color: @light;
-	font-size: 8pt;
-}
 
 #custom-scratchpad-indicator,
 #clock.time{
@@ -124,14 +123,11 @@
 	color: @warning;
 }
 
-/* Each warning that should blink */
 #battery.warning.discharging {
 	animation-name: blink-warning;
 	animation-duration: 3s;
 }
 
-
-/* Workspaces stuff */
 #workspaces button {
 	padding-left: 4px;
 	padding-right: 4px;

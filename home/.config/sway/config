@@ -1,14 +1,51 @@
+xwayland enable
 font pango: "Terminus" "10"
 
-output eDP resolution 1920x1080 position 1920,0
-output * bg "/home/shrek/.local/share/wallpapers/powerlines.jpg" fill
+set {
+	$main_out eDP-1
+	$wall1 /home/shrek/.local/share/wallpapers/powerlines.jpg
+	$wall2 /home/shrek/.local/share/wallpapers/girl_making_selfie.jpg
+}
+
+exec_always {
+	gsettings set $gnome-schema gtk-theme 'Breeze'
+	gsettings set $gnome-schema icon-theme 'Papirus-Dark'
+	gsettings set $gnome-schema cursor-theme 'Breeze'
+	gsettings set $gnome-schema font-name 'Terminus'
+	gsettings set org.gnome.desktop.interface cursor-theme "Fluent-cursors"
+}
+
+seat seat0 {
+	xcursor_theme Fluent-cursors 24
+	hide_cursor 15000
+	#hide_cursor when-typing enable
+}
+
+client.focused 				#d1d9ec #d1d9ec #d1d9ec #d1d9ec
+client.focused_inactive		#535d6c #535d6c #535d6c #535d6c
+client.unfocused			#535d6c #535d6c #535d6c #535d6c
+client.urgent				#d1d9ec #d1d9ec #d1d9ec #d1d9ec
+client.placeholder			#d1d9ec #d1d9ec #d1d9ec #d1d9ec
+
+
+#-----------OUTPUT
+
+output $main_out pos 0 0 res 1920x1080
+
+output HDMI* pos 1920 24 res 1280x1024
+
+output * bg $wall1 fill
+
+workspace {
+	9 output HDMI*
+	10 output HDMI*
+}
+
+#-----------/OUTPUT
 
 set {
 	$mod Mod4
 
-	$wall1	/home/shrek/.local/share/wallpapers/powerlines.jpg
-	$wall2 /home/shrek/.local/share/wallpapers/lewd_two_nekos.jpg
-	
 	$left h
 	$down j
 	$up k
@@ -18,18 +55,32 @@ set {
 	$term2 alacritty
 }
 
+#-----------MENU
+
+#>>>SWAY-LAUNCHER-DESKTOP
 #for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 10
+
 #set $menu exec konsole -e /usr/bin/sway-launcher-desktop
-
+	# <OR>
 #set $menu exec $term2 --class=launcher -e /usr/bin/sway-launcher-desktop
+#<<<
 
-set $menu exec bemenu-run -n -b notify-send 
+#>>>BEMENU
+set $menu bemenu-run --scrollbar always -ifnb | xargs swaymsg exec --
+#<<<
+
+#-----------/MENU
+
 
 exec swayidle -w \
-	timeout 300 'swaylock -f -c 000000' \
-	timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-	before-sleep 'swaylock -f -c 000000'\
-	before-sleep 'playerctl pause'
+	timeout 600 'swaylock -f -c 000000' \
+	timeout 660 'swaymsg "output $main_out dpms off"' \
+	resume 'swaymsg "output $main_out dpms on"' \
+	#before-sleep 'peep' \
+	#before-sleep 'swaylock -f -c 000000'\
+	#before-sleep 'playerctl pause'
+
+#-----------DEVICES
 
 input * {
     xkb_layout us,ru
@@ -39,14 +90,20 @@ input * {
 	repeat_rate 35
 }
 
-#swaymsg -t get_inputs to show devices
-
-input 1267:12610:ELAN0515:00_04F3:3142_Touchpad { 
+input type:touchpad { 
     natural_scroll enabled
 	middle_emulation enabled
-    dwt enabled
+    dwt disabled
     tap enabled
 }
+
+input type:tablet_tool {
+	#OSU
+	map_from_region 15x1mm 85x47mm
+	#...
+}
+
+#-----------/DEVICES
 
 floating_modifier $mod normal
 
@@ -143,7 +200,7 @@ bindsym --to-code {
 
 mode "resize" {
     bindsym --to-code {
-    	$left resize shrink width 20px
+    	$left resize shrink width 30px
 		$down resize grow height 30px
 		$up resize shrink height 30px
 		$right resize grow width 30px
@@ -169,57 +226,31 @@ default_border pixel 2
 for_window [tiling] border pixel 2
 smart_borders on
 
-for_window [app_id="konsole"] floating enable
-for_window [app_id="dolphin"] floating enable
-for_window [app_id="copyq"] floating enable
-
-#for_window [app_id="chromium"] inhibit_idle fullscreen
-#for_window [app_id="firefox"] inhibit_idle fullscreen
-#for_window [app_id="firefox-developer-edition"] inhibit_idle fullscreen
-
-#Caution! Locale specific:
-for_window [title="Панель выбора эмодзи"] floating enable
+for_window {
+	[app_id="copyq"] floating enable
+	[app_id="dolphin"] floating enable
+	[app_id="konsole"] floating enable
+	[app_id="Alacritty"] floating enable
+	#[app_id="chromium"] inhibit_idle fullscreen
+	#[app_id="firefox"] inhibit_idle fullscreen
+	#[app_id="firefox-developer-edition"] inhibit_idle fullscreen
+####Caution! Locale specific:
+	[title="Панель выбора эмодзи"] floating enable
+	[title="Список друзей"] floating enable
+	[title="Firefox — индикатор доступа"] floating enable
+}
 
 set $gnome-schema org.gnome.desktop.interface
 exec_always {
-	gsettings set $gnome-schema gtk-theme 'Breeze'
-	gsettings set $gnome-schema icon-theme 'Breeze Dark'
-	gsettings set $gnome-schema cursor-theme 'Breeze'
-	gsettings set $gnome-schema font-name 'JetBrainsMono Nerd Font'
+	~/.config/sway/lid.sh
 }
-
-seat seat0 xcursor_theme Fluent-cursors 24
-exec_always gsettings set org.gnome.desktop.interface cursor-theme "Fluent-cursors"
-
-client.focused 				#d1d9ec #d1d9ec #d1d9ec #d1d9ec
-client.focused_inactive		#535d6c #535d6c #535d6c #535d6c
-client.unfocused			#535d6c #535d6c #535d6c #535d6c
-client.urgent				#d1d9ec #d1d9ec #d1d9ec #d1d9ec
-client.placeholder			#d1d9ec #d1d9ec #d1d9ec #d1d9ec
-
-floating_modifier $mod normal
-
-include /etc/sway/config.d/*
 
 exec mako
 exec copyq --start-server
 
+include /etc/sway/config.d/*
+
 ###############################################################33
 
-#set $laptop <laptop_output_identifier>
-#bindswitch --reload --locked lid:on output $laptop disable
-#bindswitch --reload --locked lid:off output $laptop enable
-
-#0:0:Acer_WMI_hotkeys
-#0:3:Sleep_Button
-#0:1:Power_Button
-#0:5:Lid_Switch
-
-#xwayland disable
-#font pango: "JetBrainsMono Nerd Font" "10"
-
-#set $menu bemenu-run --scrollbar always -ifnb | xargs swaymsg exec --
-
-#set $menu wofi --show=drun | xargs swaymsg exec -
-
-#todo: seats, bindswitch
+#bindswitch --reload --locked lid:on output $main_out enable
+#bindswitch --reload --locked lid:off output $main_out disable
