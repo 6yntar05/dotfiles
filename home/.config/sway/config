@@ -2,9 +2,10 @@ xwayland enable
 font pango: "Terminus" "10"
 
 set {
+	$USER shrek
 	$main_out eDP-1
-	$wall1 /home/shrek/.local/share/wallpapers/powerlines.jpg
-	$wall2 /home/shrek/.local/share/wallpapers/girl_making_selfie.jpg
+	$wall1 /home/$USER/.local/share/wallpapers/material.png
+	$wall2 /home/$USER/.local/share/wallpapers/xp.jpg
 }
 
 exec_always {
@@ -32,14 +33,14 @@ client.placeholder			#d1d9ec #d1d9ec #d1d9ec #d1d9ec
 
 output $main_out pos 0 0 res 1920x1080
 
-output HDMI* pos 1920 24 res 1280x1024
+output HDMI-A-1 pos 1920 24 res 1280x1024
 
 output * bg $wall1 fill
 
-workspace {
-	9 output HDMI*
-	10 output HDMI*
-}
+#workspace {
+#	9 output HDMI-A-1
+#	10 output HDMI-A-1
+#}
 
 #-----------/OUTPUT
 
@@ -98,8 +99,10 @@ input type:touchpad {
 }
 
 input type:tablet_tool {
-	#OSU
-	map_from_region 15x1mm 85x47mm
+		#OSU
+	#map_from_region 15x1mm 85x47mm
+		#Painting
+	map_from_region 15x1mm 160x85mm
 	#...
 }
 
@@ -173,8 +176,8 @@ bindsym --to-code {
 
 	$mod+r mode "resize"
 
-	XF86AudioRaiseVolume exec peep && pactl set-sink-volume @DEFAULT_SINK@ +5%
-	XF86AudioLowerVolume exec peep && pactl set-sink-volume @DEFAULT_SINK@ -5%
+	XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5% && exec pactl set-sink-volume @DEFAULT_SOURCE@ +5%
+	XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5% && exec pactl set-sink-volume @DEFAULT_SOURCE@ -5%
 	XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 	XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 	$mod+f9 exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
@@ -186,7 +189,6 @@ bindsym --to-code {
 	XF86Search exec $menu
 	XF86AudioStop exec playerctl stop
 	XF86RFKill exec rfkill toggle all
-	Super_L+p exec azote
 
 	$mod+Print exec grimshot save
 	$mod+ctrl+Print exec grimshot save area
@@ -214,7 +216,8 @@ mode "resize" {
 }
 
 bar {
-    position top
+	output eDP-1
+	position top
 	swaybar_command waybar
 	workspace_buttons yes
 }
@@ -228,6 +231,7 @@ smart_borders on
 
 for_window {
 	[app_id="copyq"] floating enable
+	[class="XEyes"] floating enable
 	[app_id="dolphin"] floating enable
 	[app_id="konsole"] floating enable
 	[app_id="Alacritty"] floating enable
@@ -238,6 +242,8 @@ for_window {
 	[title="Панель выбора эмодзи"] floating enable
 	[title="Список друзей"] floating enable
 	[title="Firefox — индикатор доступа"] floating enable
+	[title="Картинка в картинке"] floating enable
+	[title="Steam — Новости"] floating enable
 }
 
 set $gnome-schema org.gnome.desktop.interface
@@ -247,6 +253,10 @@ exec_always {
 
 exec mako
 exec copyq --start-server
+#exec discord-canary
+exec easyeffects --gapplication-service
+
+#exec dex --autostart --environment sway
 
 include /etc/sway/config.d/*
 
