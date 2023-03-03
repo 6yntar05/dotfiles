@@ -5,3 +5,5 @@ Part of my system dotfiles.
 - Zsh (depends oh-my-zsh)
 - Wallpapers (somehere where was still touhou video wallpaper from WallpaperEngine but ~300mb)
 - etc...
+
+![Screenshot](/screenshot.png "Screenshot")
