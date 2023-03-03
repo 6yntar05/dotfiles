@@ -1,0 +1,80 @@
+#!/bin/sh
+
+echo Setting env
+
+###Base:
+export XDG_CURRENT_DESKTOP=Hyprland
+export XDG_SESSION_TYPE=wayland
+export XDG_SESSION_DESKTOP=Hyprland
+export TERMINAL=konsole
+export EDITOR=micro
+
+###Style:
+export XCURSOR_SIZE=24
+
+export schema=org.gnome.desktop.interface
+gsettings set $schema gtk-theme 'Breeze'
+gsettings set $schema icon-theme 'Papirus-Dark'
+gsettings set $schema cursor-theme 'Breeze'
+gsettings set $schema font-name 'Comfortaa'
+gsettings set $schema cursor-theme "Fluent-cursors"
+
+###Wayland:
+export GDK_BACKEND="wayland,x11"
+export GTK_USE_PORTAL=1
+export GTK_USE_PORTAL=0
+
+export QT_SELECT=5
+export QT_QPA_PLATFORM="wayland;xcb"
+export QT_QPA_PLATFORMTHEME=qt5ct
+export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+
+export SDL_VIDEODRIVER=wayland
+export CLUTTER_BACKEND=wayland
+
+export MOZ_DISABLE_RDD_SANDBOX=1
+export MOZ_ENABLE_WAYLAND=1
+export MOZ_ACCELERATED=1
+export MOZ_WEBRENDER=1
+
+###Other:
+export _JAVA_AWT_WM_NONREPARENTING=1
+#export WLR_NO_HARDWARE_CURSORS=1
+export WLR_RENDERER=vulkan
+#export WLR_DRM_NO_MODIFIERS=1
+
+###Hyprland:
+export HYPRLAND_LOG_WLR=1
+
+###Hardware acceleration:
+radeon() {
+	echo Radeon Mode
+		
+	export VDPAU_DRIVER=radeonsi
+	export LIBVA_DRIVER_NAME=radeonsi
+	#export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/radeon_icd.x86_64.json
+	export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/amd_icd64.json
+}
+
+nvidia() {
+    echo NoVideo Mode
+        
+    export VDPAU_DRIVER=nvidia
+    export LIBVA_DRIVER_NAME=vdpau
+	export VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/nvidia_icd.json
+    
+	export GBM_BACKEND=nvidia-drm
+	export __GLX_VENDOR_LIBRARY_NAME=nvidia
+	export LIBVA_DRIVER_NAME=nvidia=nvidia
+	#export __GLX_GSYNC_ALLOWED
+	#export __GL_VRR_ALLOWED=?
+	#export WLR_DRM_NO_ATOMIC=1
+}
+
+if [ $1 == "-n" ]; then
+    nvidia
+else
+	radeon
+	
+echo Starting Hyprland...
+exec Hyprland

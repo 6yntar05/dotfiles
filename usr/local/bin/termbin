@@ -1,0 +1,2 @@
+#!/bin/bash
+nc termbin.com 9999

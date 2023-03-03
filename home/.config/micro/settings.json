@@ -1,7 +1,6 @@
 {
-    "colorscheme": "monokai",
+    "colorscheme": "monokai-alpha",
     "diffgutter": true,
-    "eofnewline": false,
     "mkparents": true,
     "scrollbar": true
 }

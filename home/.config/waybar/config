@@ -1,17 +1,50 @@
+// -*- mode: json -*-
 {
-	"layer": "top","position": "top",
+    "output": "eDP-1",
+	"layer"	: "top",
+	
+	"margin-top"	: 4,
+	"margin-bottom"	: -4,
+	"margin-left"	: 10,
+	"margin-right"	: 10,
+	
+	"modules-left"	: ["tray","wlr/workspaces","custom/separator","wlr/taskbar","custom/playerctl"],
+	"modules-center": ["custom/window"],
+	"modules-right"	: ["network","custom/vpn","custom/separator","pulseaudio","custom/separator","backlight","custom/separator","temperature","battery","custom/watts","custom/separator","keyboard-state","clock#date","clock#time"],
 
-	"modules-left": ["custom/scratchpad-indicator","custom/arrow-generic-light-r","sway/mode","tray","custom/subarrow-generic-dark-r","custom/playerctl","sway/workspaces","custom/arrow-transparent-generic-r","custom/subarrow-transparent-generic-r","custom/weather","wlr/taskbar"],
+	"wlr/workspaces": {
+		"all-outputs": true,
+		"format": "{name}",
+		"format-icons": {
+			"1":"1",
+			"2":"2",
+			"3":"3",
+			"4":"4",
+			"5":"5",
+			"6":"6",
+			"7":"7",
+			"8":"8",
+			"9":"9",
+			"10":"10",
+		},
+	},
 
-	"modules-center": ["custom/subarrow-transparent-generic","custom/subarrow-transparent-light","sway/window","custom/subarrow-transparent-light-r","custom/subarrow-transparent-generic-r"],
+	"wlr/workspaces": {
+     	"format": "{icon}",
+     	"on-scroll-up": "hyprctl dispatch workspace e+1",
+     	"on-scroll-down": "hyprctl dispatch workspace e-1"
+	},
 
-	"modules-right": ["custom/subarrow-transparent-generic","custom/arrow-transparent-generic","pulseaudio","custom/subarrow-generic-dark","network","custom/vpn","custom/subarrow-generic-dark","idle_inhibitor","backlight","custom/subarrow-generic-dark","temperature","custom/subarrow-generic-dark","battery","custom/watts","custom/subarrow-generic-dark","keyboard-state","sway/language","custom/subarrow-generic-dark","clock#date","custom/arrow-generic-light","clock#time"],
-	//"cpu","custom/clipman","keyboard-state"
-
-
-	// -------------------------------------------------------------------------
-	// Modules
-	// -------------------------------------------------------------------------
+	"keyboard-state": {
+		"numlock": true,
+		"capslock": true,
+		"scrolllock": false,
+		"format": "{icon}",
+		"format-icons": {
+			"locked": "",
+			"unlocked": ""
+		}
+	},
 	
 	"battery": {
 		"interval": 10,
@@ -21,7 +54,7 @@
 		},
 		"format": " {capacity}%",
 		"format-plugged": " {capacity}%",
-		"format-discharging": "{icon} {capacity}%",
+		"format-discharging": "{icon}  {capacity}%",
 		"format-icons": ["","","","",""],
 		"tooltip-format": "{}\n(cat /sys/class/power_supply/BAT1/current_now)",
 		"tooltip": true
@@ -29,73 +62,35 @@
 
 	"clock#time": {
 		"interval": 1,
-		"format": "{:%H:%M:%S}",
+		"format": "{:%H:%M:%S} ",
 		"tooltip": false
 	},
 
 	"clock#date": {
 		"interval": 30,
-		"format": "{:%e %b %Y}",
+		"format": "{:%e %b}",
 		"tooltip-format": "<tt>{calendar}</tt>",
 		"tooltip": true
 	},
 
-	"cpu": {
-		"interval": 5,
-		"tooltip": false,
-		"format": " {usage}%",
-		"states": {
-		  "warning": 70,
-		  "critical": 90
-		}
-	},
-
     "backlight": {
-        "format": "{icon} {percent}%",
-        "format-icons": [""],
+        "format": "{percent}%",
         "on-scroll-up": "exec brightnessctl set +1%",
         "on-scroll-down": "exec brightnessctl set 1%-"
     },
 
-	"sway/language": {
-		"format": "{}",
-		"tooltip": false,
-		"on-click": "exec copyq --start-server && copyq toggle"
-	},
-
 	"network": {
-		"interval": 5,
+        //"interface": "any",
 		"format": " {ifname}",
-		"format-wifi": " {signalStrength}%",
+		"format-wifi": " {signalStrength}%  {bandwidthUpBits}",
 		"format-ethernet": " {ifname}",
 		"format-disconnected": "",
-		"tooltip-format": "{ifname} : {ipaddr}/{cidr}",
-		"tooltip-format-wifi": "{ifname}: {essid} : {ipaddr}/{cidr}",
+		"tooltip-format": "{ifname} : {ipaddr}/{cidr}\nDOWN:{bandwidthDownBits} UP:{bandwidthUpBits}",
+		"tooltip-format-wifi": "{ifname}: {essid} : {ipaddr}/{cidr}\n{signalStrength}% DOWN:{bandwidthDownBits} UP:{bandwidthUpBits}",
 		"tooltip": true,
 		"on-click": "konsole -e nmtui",
-		"on-click-right": "blueman-manager"
-	},
-
-	"sway/mode": {
-		"format": "{}",
-		"tooltip": false
-	},
-
-	"sway/window": {
-		"format": "{}",
-		"max-length": 40,
-		"tooltip": false
-	},
-
-	"sway/workspaces": {
-		"all-outputs": false,
-		"disable-scroll": true,
-		"format": "{icon}",
-		"format-icons": {
-			"urgent": "",
-			"focused": "",
-			"O1Qdefault": ""
-		}
+		"on-click-right": "blueman-manager",
+		"interval": 3
 	},
 
 	"pulseaudio": {
@@ -106,28 +101,42 @@
         "format-source": " {volume}%",
         "format-source-muted": "",
 		"format-icons": {
-			"default": [""],
+			"default": ["","",""],
 			"spotify": "",
 			"phone": "",
 			"portable": "",
-			"car": ""
+			"car": "",
+			"hands-free": "HF ",
+			"hdmi": "HDMI ",
+			"hifi": "HF "
 		},
 		"on-click": "pavucontrol",
+		"on-click-right": "gnome-sound-recorder",
+		"on-click-middle": "konsole -e 'wf-recorder -a'",
 		"on-scroll-up": "exec pactl set-sink-volume @DEFAULT_SINK@ +1%",
 		"on-scroll-down": "exec pactl set-sink-volume @DEFAULT_SINK@ -1%",
 		"tooltip-format": "{desc}",
 		"tooltip": true
 	},
 
+	"custom/audio-monitor": {
+		"format": "{}",
+		"exec": "exec pactl get-sink-volume @DEFAULT_SINK@ | awk '{print $5}'",
+		"interval": 1
+	},
+	
 	"temperature": {
-		"critical-threshold": 70,
-		"interval": 5,
-		"hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
+		"critical-threshold": 85,
+		"interval": 3,
+		"hwmon-path": "/sys/class/hwmon/hwmon4/temp1_input",
 		"format": "{icon} {temperatureC}°",
 		"format-icons": [
-			"❄","❄","❄","❄","","","","","","","",""
+			"❄","❄","❄","","","","","",""
 		],
-		"tooltip": false
+		"tooltip": false,
+		"on-click": "exec konsole -e 'su -c powertop'",
+		"on-click-middle": "exec konsole -e 'doas tlp ac'",
+		"on-click-right": "exec konsole -e 'doas tlp bat'"
 	},
 
 	"tray": {
@@ -144,105 +153,40 @@
 	    "on-click-middle": "close"
 	},
 
-	"idle_inhibitor": {
-		"format": "{icon}",
-		"format-icons": {
-			"activated": " ",
-			"deactivated": " "
-		}
-	},
-
-	"custom/arrow-generic-light": {
-		"format": "",
+	"custom/separator": {
+		"format": "|",
 		"tooltip": false
 	},
-
-	"custom/arrow-generic-light-r": {
-		"format": "",
-		"tooltip": false
-	},
-	
-	"custom/arrow-transparent-generic": {
-		"format": "",
-		"tooltip": false
-	},
-	
-	"custom/arrow-transparent-generic-r": {
-		"format": "",
-		"tooltip": false
-	},
-
-	"custom/subarrow-transparent-generic": {
-		"format": "",
-		"tooltip": false
-	},
-	
-	"custom/subarrow-transparent-generic-r": {
-		"format": "",
-		"tooltip": false
-	},
-
-	"custom/subarrow-generic-light": {
-		"format": "",
-		"tooltip": false
-	},
-	
-	"custom/subarrow-generic-light-r": {
-		"format": "",
-		"tooltip": false
-	},
-
-	"custom/subarrow-transparent-light": {
-		"format": "",
-		"tooltip": false
-	},
-	
-	"custom/subarrow-transparent-light-r": {
-		"format": "",
-		"tooltip": false
-	},
-
-    "custom/subarrow-generic-dark": {
-   		"format": "",
-   		"tooltip": false
-   	},
-
-    "custom/subarrow-generic-dark-r": {
-		"format": "",
-		"tooltip": false
-	},
-	
-    "custom/scratchpad-indicator": {
-        "interval": 3,
-        "return-type": "json",
-        "exec": "swaymsg -t get_tree | jq --unbuffered --compact-output '( select(.name == \"root\") | .nodes[] | select(.name == \"__i3\") | .nodes[] | select(.name == \"__i3_scratch\") | .focus) as $scratch_ids | [..  | (.nodes? + .floating_nodes?) // empty | .[] | select(.id |IN($scratch_ids[]))] as $scratch_nodes | { text: \"\\($scratch_nodes | length)\", tooltip: $scratch_nodes | map(\"\\(.app_id // .window_properties.class) (\\(.id)): \\(.name)\") | join(\"\\n\") }'",
-        "format": " {} ",
-        "on-click": "exec swaymsg 'scratchpad show'",
-        "on-click-right": "exec swaymsg 'move scratchpad'"
-    },
 
     "custom/weather": {
     	"format": "{}",
-        "exec": "sleep 15;curl 'https://wttr.in/?format=1'",
+        "exec": "sleep 1; curl 'https://wttr.in/Tomsk?format=%c%t(%f)+%w' | sed 's/°C//g' | sed 's/☀/🌣/g' | sed 's/  / /g' | sed 's/km*h//g' " ,
         "interval": 3600,
-        "tooltip": true
+        "tooltip": false,
+        "max-length": 20
     },
 
 	"custom/watts": {
-		"exec": "sh ~/.config/waybar/watts.sh",
-		"interval": 10
+		"exec":		"sh ~/.config/waybar/watts.sh",
+		"interval":	10
 	},
 
-	"keyboard-state": {
-		"numlock": true,
-		"capslock": true,
-		"format": "{name} {icon}",
-		"format-icons": {
-			"locked": "",
-			"unlocked": ""
-		}
-    }
- 
+	"custom/playerctl": {
+		"exec": "
+			playerctl metadata --format '{{title}}' -as 2> /dev/null | sed 's/&/and/g'	
+		",
+		"max-length":		40,
+		"interval":			2,
+		"on-scroll-up":		"exec playerctl position 10+",
+        "on-scroll-down":	"exec playerctl position 10-",
+        "on-click":			"exec playerctl play-pause",
+        "on-click-right":	"exec playerctl next",
+        "on-click-middle":	"exec playerctl stop"
+	},
+	
+	"custom/window": {
+		"exec": "hyprctl activewindow | rg title | sed 's/\ttitle: //g' | awk '{ printf \"%s%s\", substr($0,0,70), (length($0)>70)?\"...\":\"\" }'",
+		"max-lenght":	40,
+		"interval":		1
+	}
 }
-
-//playerctl -F metadata xesam:title

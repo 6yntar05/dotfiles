@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Toggle Linux CPU Boost (Tuboboost)
+
+echo $1 | tee /sys/devices/system/cpu/cpufreq/boost

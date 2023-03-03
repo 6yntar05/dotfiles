@@ -1,3 +1,4 @@
+#!/bin/sh
 echo "10"	| tee /sys/module/snd_hda_intel/parameters/power_save 					> /dev/null
 	 #1
 	 
@@ -13,10 +14,12 @@ echo "5"	| tee /proc/sys/vm/dirty_background_ratio								> /dev/null
 echo "15000"| tee /proc/sys/vm/dirty_writeback_centisecs							> /dev/null
 	 #1500
 	 
-echo "auto" | tee /sys/class/drm/card1/device/power_dpm_force_performance_level		> /dev/null
+echo "auto" | tee /sys/class/drm/card*/device/power_dpm_force_performance_level		> /dev/null
 	 #high
 
-modprobe -r uvcvideo
+#modprobe -r uvcvideo
 modprobe -r btusb
 modprobe -r r8169
 #-r
+
+#rfkill block bluetooth

@@ -1,0 +1,44 @@
+#!/bin/sh
+
+# Wrapper for nbfc (FOR 2-fan laptops)
+# Using:
+#	fan <speed1/auto> <speed2/auto>
+#	fan <sppedForAll/auto>
+
+if [[ -n $1 && -n $2 ]];then
+
+	if [[ $1 == "auto" ]];then
+		PARAM0=-a
+	else
+		PARAM0="-s $1"
+	fi
+
+
+	if [[ $2 == "auto" ]];then
+		PARAM1=-a
+	else
+		PARAM1="-s $2"
+	fi
+
+	nbfc set -f1 $PARAM0
+	nbfc set -f0 $PARAM1
+else
+
+	if [[ -n $1 && ! -n $2 ]];then
+
+		if [[ $1 == "auto" ]];then
+			PARAM0=-a
+			PARAM1=-a
+		else
+			PARAM0="-s $1"
+			PARAM1="-s $1"
+		fi
+		
+		nbfc set -f0 $PARAM0
+		nbfc set -f1 $PARAM1
+		
+	else
+		echo "auto/{fan speed%}"
+	fi
+	
+fi

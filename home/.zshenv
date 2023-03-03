@@ -1,8 +1,1 @@
-QT_QPA_PLATFORMTHEME=qt5ct
-QT_QPA_PLATFORM=wayland
-MOZ_ENABLE_WAYLAND=1
-TERMINAL=konsole
-SDL_VIDEODRIVER=wayland
-XDG_CURRENT_DESKTOP=Unity
-CLUTTER_BACKEND=wayland
-_JAVA_AWT_WM_NONREPARENTING=1
+JDK_JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'

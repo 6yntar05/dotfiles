@@ -1,2 +1,5 @@
-home/dotconfig/micro/buffers
-home/dotconfig/micro/backups
+home/.config/micro/buffers
+home/.config/micro/backups
+.zsh_history
+*history*
+*secret*

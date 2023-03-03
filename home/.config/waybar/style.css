@@ -1,190 +1,175 @@
+@define-color main #232323;
+@define-color accent #f0f0f0;
+@define-color font #f0f0f0;  
+@define-color separator transparent;
+
+@define-color grad_from #171717;
+@define-color grad_to #232323; 
+
+@define-color warning #c9545d;
+@define-color critical #ff0000;
+
 @keyframes blink-warning {
 	80% {
-		color: @light;
-	}
-
-	to {
-		color: @warning
+	        color: @font;
+	} to {
+		color: @warning;
+                border-top: 2px solid @warning;
 	}
 }
-
 @keyframes blink-critical {
 	80% {
-		color: @light;
-	}
-
-	to {
+		color: @font;
+	} to {
 		color: @critical;
+                border-top: 2px solid @warning;
 	}
 }
-
-
-@define-color light #eceff4;
-@define-color dark #2e3440;
-@define-color warning #ff8070;
-@define-color critical #ff3030;
-@define-color generic #434c5e;
-@define-color date #434c5e;
-@define-color time #eceff4;
 
 * {
 	border: none;
 	border-radius: 0;
-	min-height: 0;
+	min-height: 20px;
 	margin: 0;
 	padding: 0;
+	color: @font;
+	font-family: "JetBrainsMono Nerd Font";
 }
 
 #waybar {
-	background: #232323;
-	color: @light;
-	font-family: "Terminus";
-	font-size: 10pt;
+	border: solid;
+	border-color: white;
+	border-radius: 10;
+	background: linear-gradient(rgba(17, 17, 17, 0.90) 0%, rgba(23, 23, 23, 0.90) 100%);
+    font-size: 10pt;
 	opacity: 0.85;
 }
 
+/*
+window#waybar > box {
+    border-radius: 10px;
+    margin: 1px 2px 3px 4px;
+    box-shadow: 1px 1px 1px 1px @grad_to;
+}
+*/
+
+#custom-separator{
+	font-size: 14px;
+	color: @separator;
+        padding-left: 2px;
+        padding-right: 2px;
+}
+
 #battery,
-#clock,
-#cpu,
 #language,
-#memory,
 #mode,
-#idle_inhibitor,
 #network,
 #custom-vpn,
-#pulseaudio,
+#temperature,
 #tray,
 #backlight,
-#custom-watts{
-	padding-left: 6px;
-	padding-right: 6px;
-	background-color: @generic;
-	background: @generic;
-	color: @light;
+#custom-watts,
+#pulseaudio,
+#idle_inhibitor,
+#custom-audio-monitor{
+	padding-left: 4px;
+	padding-right: 4px;
+	background: transparent;
 }
 
-#temperature{
+#custom-playerctl{
+    padding-left: 6px;
+    padding-right: 6px
+}
+
+#clock{
+	padding-left: 0px;
+	padding-right: 10px;
+	background: transparent;
+}
+
+#idle_inhibitor,
+#temperature,
+#custom-audio-monitor,
+#workspaces{
+	padding-right: 0px;
+}
+#pulseaudio,
+#workspaces{
+   	padding-left: 0px;
+}
+#taskbar{
+	padding-left: 2px;
+	border-radius: 0;
+}
+#tray{
 	padding-left: 6px;
 	padding-right: 2px;
-	background-color: @generic;
-	background: @generic;
-	color: @light;
 }
 
+#custom-audio-monitor{
+    font-size: 6pt;
+}
+#custom-scratchpad-indicator{
+    font-size: 10px;
+}
 #custom-weather,
-#taskbar{
-	padding-left: 10px;
-	padding-right: 10px;
-	color: @light;
-	font-size: 8pt;	
+#custom-vpn{
+	padding-left: 6px;
+	padding-right: 6px;
+	font-size: 8pt;
 }
 
-
-#custom-scratchpad-indicator,
-#clock.time{
-	background-color: @light;
-	background: @light;
-	color: @dark;
-	opacity: 5;
-}
-
-/* Each module that should blink */
 #mode,
-#memory,
 #temperature,
-#battery {
+#battery{
 	animation-timing-function: linear;
 	animation-iteration-count: infinite;
 	animation-direction: alternate;
 }
 
-#memory.critical,
-#cpu.critical,
 #temperature.critical,
-#battery.critical {
+#battery.critical{
 	color: @critical;
 }
-
-/* Each critical that should blink */
-#mode,
-#memory.critical,
-#temperature.critical,
-#battery.critical.discharging {
-	animation-name: blink-critical;
-	animation-duration: 2s;
-}
-
-/* Each warning */
 #network.disconnected,
-#memory.warning,
-#cpu.warning,
 #temperature.warning,
 #battery.warning {
 	color: @warning;
 }
 
+#mode,
+#temperature.critical,
+#battery.critical.discharging {
+	animation-name: blink-critical;
+	animation-duration: 2s;
+}
 #battery.warning.discharging {
 	animation-name: blink-warning;
 	animation-duration: 3s;
 }
 
-#workspaces button {
+
+#workspaces button{
+	border-top: 2px solid transparent;
 	padding-left: 4px;
 	padding-right: 4px;
-	color: @light;
-	background: @generic;
+}
+#taskbar button{
+	border-top: 2px solid transparent;
+	padding-left: 1px;
+	padding-right: 1px;
+	border-bottom: 2px solid transparent;
 }
 
-#workspaces button.focused {
-	background: @generic;
+#taskbar button.urgent,
+#workspaces button.urgent{
+	border-top: 2px solid @critical;
 }
 
-#workspaces button.urgent {
-	border-color: #c9545d;
-	color: #c9545d;
-}
-
-#window {
-	margin-right: 40px;
-	margin-left: 40px;
-}
-
-#custom-arrow-transparent-generic,
-#custom-subarrow-transparent-generic,
-#custom-arrow-transparent-generic-r,
-#custom-subarrow-transparent-generic-r{
-	font-size: 16px;
-	color: @generic;
-	background: transparent;
-	font-family: "Terminus";
-	font-size: 14pt;
-}
-
-#custom-arrow-generic-light,
-#custom-subarrow-generic-light,
-#custom-arrow-generic-light-r,
-#custom-subarrow-generic-light-r{
-	font-size: 16px;
-	color: @light;
-	background: @generic;
-	font-family: "Terminus";
-	font-size: 14pt;
-}
-
-#custom-subarrow-generic-dark,
-#custom-subarrow-generic-dark-r{
-	font-size: 16px;
-	color: @dark;
-	background: @generic;
-	font-family: "Terminus";
-	font-size: 14pt;
-}
-
-#custom-subarrow-transparent-light,
-#custom-subarrow-transparent-light-r{
-	font-size: 16px;
-	color: @light;
-	background: transparent;
-	font-family: "Terminus";
-	font-size: 14pt;
+#taskbar button:hover,
+#taskbar button.active,
+#workspaces button.focused,
+#workspaces button:hover{
+	border-top: 2px solid @accent;
 }

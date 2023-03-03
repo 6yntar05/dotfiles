@@ -1,0 +1,10 @@
+#!/bin/sh
+
+export MOZ_ENABLE_WAYLAND=0 
+export QT_QPA_PLATFORM=xcb 
+export GDK_BACKEND=x11
+export SDL_VIDEODRIVER=x11
+export WINIT_UNIX_BACKEND=x11
+export CLUTTER_BACKEND=x11
+
+$@
