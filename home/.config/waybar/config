@@ -173,7 +173,7 @@
 
 	"custom/playerctl": {
 		"exec": "
-			playerctl metadata --format '{{title}}' -as 2> /dev/null | sed 's/&/and/g'	
+			playerctl metadata --format '{{status}}[{{duration(position)}}/{{duration(mpris:length)}}]{{title}}' -as 2> /dev/null | sed 's/&/and/g' | sed 's/Playing/|>/g' | sed 's/Paused/||/g' 
 		",
 		"max-length":		40,
 		"interval":			2,
