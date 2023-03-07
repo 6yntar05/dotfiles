@@ -1,4 +1,4 @@
-Part of my system dotfiles.
+## Part of my system dotfiles.
 - Hyprland
 - Waybar
 - Micro with transparent monokai
@@ -6,4 +6,13 @@ Part of my system dotfiles.
 - Wallpapers (somehere where was still touhou video wallpaper from WallpaperEngine but ~300mb)
 - etc...
 
+## Screenshot
 ![Screenshot](/screenshot.png "Screenshot")
+
+## Packages
+ArchLinux:<br>
+- `yay -S hyprland-bin waybar xdg-desktop-portal-hyprland-git mako swww zsh oh-my-zsh-git ttf-jetbrains-mono`
+- `# You can choose other optional packages`
+  
+Not ArchLinux:
+- `You don't need it bro`
