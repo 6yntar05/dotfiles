@@ -11,7 +11,7 @@
 
 ## Packages
 ArchLinux:<br>
-- `yay -S hyprland-bin waybar xdg-desktop-portal-hyprland-git mako swww zsh oh-my-zsh-git ttf-jetbrains-mono`
+- `yay -S hyprland-bin waybar xdg-desktop-portal-hyprland-git mako swww zsh oh-my-zsh-git ttf-jetbrains-mono micro neofetch playerctl lsd translate-shell`
 - `# You can choose other optional packages`
   
 Not ArchLinux:
