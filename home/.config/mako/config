@@ -1,0 +1,18 @@
+#Mako - like a make, but it notify daemon
+border-size=2
+border-radius=0
+margin=4,4,10
+width=300
+default-timeout=15000
+font="JetBrainsMono Nerd Font" 10
+
+background-color=#232323
+text-color=#f0f0f0
+border-color=#434343
+progress-color=source #cc241d
+
+[urgency=high]
+default-timeout=0
+background-color=#fb4934
+text-color=#232323
+border-color=#232323
