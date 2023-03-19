@@ -1,9 +1,6 @@
-echo rm "${*}?" >&2
+#!/bin/sh
+#Carelessness protection
 
-#for f in "${@}"
-#do
-#	echo $f
-#done
-
-read -p '^C to cancel'
-rm "${@}"
+echo "[!!] Removing: ${*}" >&2
+read -rp '> Hit ^C to cancel'
+/bin/rm "${@}"
