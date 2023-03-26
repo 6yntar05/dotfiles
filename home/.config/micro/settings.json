@@ -1,6 +1,17 @@
 {
+    "*.cpp": {
+        "savecursor": true,
+        "saveundo": true
+    },
     "colorscheme": "monokai-alpha",
     "diffgutter": true,
+    "eofnewline": false,
+    "filemanager-openonstart": true,
+    "keepautoindent": true,
+    "lsp.autocompleteDetails": true,
+    "lsp.formatOnSave": false,
+    "lsp.server": "cpp=clangd",
     "mkparents": true,
-    "scrollbar": true
+    "scrollbar": true,
+    "useprimary": false
 }
