@@ -3,7 +3,6 @@
 - Waybar
 - Micro with transparent monokai
 - Zsh (depends oh-my-zsh)
-- Wallpapers (somehere where was still touhou video wallpaper from WallpaperEngine but ~300mb)
 - etc...
 
 ## Screenshot
@@ -11,8 +10,7 @@
 
 ## Packages
 ArchLinux:<br>
-- `yay -S hyprland-bin waybar xdg-desktop-portal-hyprland-git mako swww zsh oh-my-zsh-git ttf-jetbrains-mono micro neofetch playerctl lsd translate-shell rofi-lbonn-wayland-git`
-- `# You can choose other optional packages`
+- `yay -S hyprland waybar xdg-desktop-portal-hyprland-git mako swww zsh oh-my-zsh-git ttf-jetbrains-mono micro neofetch playerctl lsd translate-shell rofi-lbonn-wayland-git`
   
 Not ArchLinux:
 - `You don't need it bro`
