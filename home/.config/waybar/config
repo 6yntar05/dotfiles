@@ -8,7 +8,8 @@
 	"margin-left"	: 10,
 	"margin-right"	: 10,
 	
-	"modules-left"	: ["tray","wlr/workspaces","custom/separator","wlr/taskbar","custom/playerctl"],
+	//"modules-left"	: ["tray","wlr/workspaces","custom/separator","wlr/taskbar","custom/playerctl"],
+	"modules-left"	: ["tray","wlr/workspaces","custom/separator","custom/playerctl"],
 	"modules-center": ["custom/window"],
 	"modules-right"	: ["network","custom/vpn","custom/separator","pulseaudio","custom/separator","backlight","custom/separator","temperature","battery","custom/watts","custom/separator","keyboard-state","clock#date","clock#time"],
 
@@ -145,6 +146,7 @@
 	},
 
 	"wlr/taskbar": {
+		"all-outputs": true,
 	    "format": "{icon}",
 	    "icon-size": 14,
 	    "icon-theme": "Tela-circle-dark",
@@ -185,7 +187,7 @@
 	},
 	
 	"custom/window": {
-		"exec": "hyprctl activewindow | rg title | sed 's/\ttitle: //g' | awk '{ printf \"%s%s\", substr($0,0,70), (length($0)>70)?\"...\":\"\" }'",
+		"exec": "hyprctl activewindow | rg title: | sed 's/\ttitle: //g' | awk '{ printf \"%s%s\", substr($0,0,70), (length($0)>70)?\"...\":\"\" }'",
 		"max-lenght":	40,
 		"interval":		1
 	}
