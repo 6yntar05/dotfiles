@@ -1,0 +1,13 @@
+#/bin/sh
+
+# --append=""
+kexec -l /boot/vmlinuz-linux-zen --initrd=/boot/initramfs-linux-zen.img  --reuse-cmdline
+
+read -rp "Kexec? (Hit any key or ^C to cancel)"
+
+# Unmodeset NoVideo gpu
+nvx off-kill
+modprobe -r nvidia_drm
+modprobe -r nvidia
+
+systemctl kexec
