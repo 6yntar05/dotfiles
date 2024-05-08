@@ -1,0 +1,10 @@
+#!/bin/sh
+printf -- "IPs in logging history: \n\t"
+cat /var/log/audit/audit.log \
+        | grep USER_LOGIN \
+        | grep -v res=failed \
+        | awk '{print $12}' \
+        | sed 's/addr=//g' \
+        | sort \
+        | uniq \
+        | xargs echo | sed 's/ /\n\t/g'
